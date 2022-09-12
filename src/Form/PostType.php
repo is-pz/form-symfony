@@ -9,6 +9,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
@@ -18,6 +19,22 @@ class PostType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
+            ->add('category', ChoiceType::class, [
+                'choices' => [
+                    //'PHP' => 'php',
+                    //'Laravel' => 'laravel',
+                    //'Symfony' => 'symfony'
+                    'Lenguages' =>[
+                        'PHP' => 'php'
+                    ],
+                    'Frameworks' =>[
+                        'Laravel' => 'laravel',
+                        'Symfony' => 'symfony'
+                    ]
+                ],
+                'placeholder' => 'Selccione una ...',
+                'label' => 'Categorías'
+            ])
             ->add('title', TextType::class,[
                 'label' => 'Titulo de la publicación',
                 'help' => 'Piensa en el SEO ¿Cómo buscarías en Google?'         

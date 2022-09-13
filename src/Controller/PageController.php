@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Form\ContactType;
+use App\Entity\Post;
+use Doctrine\ORM\EntityManager;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,9 +16,11 @@ use Symfony\Component\Routing\Annotation\Route;
 class PageController extends AbstractController
 {
     #[Route('/', name: "index", methods:['GET'])]
-    public function index(): Response
+    public function index(EntityManager $entityManager): Response
     {
-        return $this->render('page/index.html.twig');
+        return $this->render('page/index.html.twig',[
+            'posts' => $entityManager->getRepository(Post::class)->findAll()
+        ]);
     }
 
     #[Route('/contactos-v1', name: "contact-v1", methods:['GET', 'POST'])]

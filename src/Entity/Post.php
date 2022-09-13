@@ -6,6 +6,8 @@ use App\Repository\PostRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
+use Symfony\Component\Validator\Constraints as Assert;
+
 #[ORM\Entity(repositoryClass: PostRepository::class)]
 class Post
 {
@@ -15,9 +17,12 @@ class Post
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank]
+    #[Assert\Length(min:9, max:90)]
     private ?string $title = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Assert\NotNull]
     private ?string $body = null;
 
     #[ORM\ManyToOne]
@@ -35,7 +40,9 @@ class Post
         return $this->title;
     }
 
-    public function setTitle(string $title): self
+    // public function setTitle(string $title = null): self
+    // public function setTitle(null|string $title): self
+    public function setTitle(?string $title): self
     {
         $this->title = $title;
 
@@ -47,7 +54,7 @@ class Post
         return $this->body;
     }
 
-    public function setBody(string $body): self
+    public function setBody(?string $body): self
     {
         $this->body = $body;
 
